@@ -73,22 +73,83 @@ Game.prototype.movePlayer = function(event) {
     }
     switch (event.keyCode){
         case 37:
-            // left key event
+            this.moveLeft();
             break;
         case 38:
-            // up key event
+            this.moveUp();
             break;
         case 39:
-            // right key event
+            this.moveRight();
             break;
         case 40:
-            // down key event
+            this.moveDown();
             break;
+    }
+}
+Game.prototype.moveLeft = function (sprite) {
+    if (this.player.x == 0) {
+        return;
+    }
+    let nextTile = this.map[this.player.y][this.player.x - 1];
+    if (nextTile == 1) {
+        return;
+    }
+    this.player.x -= 1;
+    this.updateHoriz(sprite);
+}
+Game.prototype.moveUp = function (sprite) {
+    if (this.player.y == 0) {
+        return;
+    }
+    let nextTile = this.map[this.player.y - 1][this.player.x];
+    if (nextTile == 1) {
+        return;
+    }
+    this.player.y -= 1;
+    this.updateVert(sprite);
+}
+Game.prototype.moveRight = function (sprite) {
+    if (this.player.x == this.map[this.player.y].length - 1) {
+        return;
+    }
+    let nextTile = this.map[this.player.y][this.player.x + 1];
+    if (nextTile == 1) {
+        return;
+    }
+    this.player.x += 1;
+    this.updateHoriz(sprite);
+}
+Game.prototype.moveDown = function (sprite) {
+    if (this.player.y == this.map.length - 1) {
+        return;
+    }
+    let nextTile = this.map[this.player.y + 1][this.player.x];
+    if (nextTile == 1) {
+        return;
+    }
+    this.player.y += 1;
+    this.updateVert(sprite);
+}
+Game.prototype.updateHoriz = function (sprite) {
+    this.player.el.style.left = this.player.x * this.tileDim + 'px';
+}
+Game.prototype.updateVert = function () {
+    this.player.el.style.top = this.player.y * this.tileDim + 'px';
+}
+Game.prototype.checkGoal = function () {
+    let body = document.querySelector('body');
+    let txt = this.el.querySelector('.text');
+    if (this.player.y == this.goal.y &&
+        this.player.x == this.goal.x) {
+        // add success class to the body
+    } else {
+        // remove success class from the body
     }
 }
 Game.prototype.keyboardListener = function() {
     document.addEventListener('keydown', event => {
-        this.movePlayer(event)
+        this.movePlayer(event);
+        this.checkGoal();
     });
 }
 function init() {
