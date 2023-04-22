@@ -136,20 +136,44 @@ Game.prototype.updateHoriz = function (sprite) {
 Game.prototype.updateVert = function () {
     this.player.el.style.top = this.player.y * this.tileDim + 'px';
 }
-Game.prototype.checkGoal = function () {
+Game.prototype.checkGoal = function (instrux_msg, goal_msg) {
     let body = document.querySelector('body');
     let txt = this.el.querySelector('.text');
     if (this.player.y == this.goal.y &&
         this.player.x == this.goal.x) {
-        // add success class to the body
+        body.className = 'success';
     } else {
-        // remove success class from the body
+        body.className = '';
     }
 }
 Game.prototype.keyboardListener = function() {
     document.addEventListener('keydown', event => {
         this.movePlayer(event);
         this.checkGoal();
+    });
+}
+Game.prototype.buttonListeners = function(instrux_msg,goal_msg) {
+    let up = document.getElementById('up');
+    let left = document.getElementById('left');
+    let down = document.getElementById('down');
+    let right = document.getElementById('right');
+
+    let obj = this;
+    up.addEventListener('mousedown', function() {
+        obj.moveUp();
+        obj.checkGoal(instrux_msg, goal_msg);
+    });
+    down.addEventListener('mousedown', function() {
+        obj.moveDown();
+        obj.checkGoal(instrux_msg, goal_msg);
+    });
+    left.addEventListener('mousedown', function() {
+        obj.moveLeft();
+        obj.checkGoal(instrux_msg, goal_msg);
+    });
+    right.addEventListener('mousedown', function() {
+        obj.moveRight();
+        obj.checkGoal(instrux_msg, goal_msg);
     });
 }
 function init() {
@@ -161,5 +185,6 @@ function init() {
     let playerSprite = myGame.placeSprite('player');
     myGame.player.el = playerSprite;
     myGame.keyboardListener();
+    myGame.buttonListeners();
 }
 init();
