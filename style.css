@@ -94,6 +94,24 @@ div.layer div{
 .default .wall{
     background-color: skyblue;
 }
+.grassland .floor {
+    background-color: #7bb76d; /* green */
+}
+.grassland .wall {
+    background-color: #806d51; /* brown */
+}
+.grassland #player {
+    background-color: #b2ccec; /* light blue */
+}
+.dungeon .floor {
+    background-color: #a9a9a9; /* dark grey */
+}
+.dungeon .wall {
+    background-color: #9c649c; /* purple */
+}
+.dungeon #player {
+    background-color: #ab1431; /* red */
+}
 .player,
 .goal{
     transform-origin: center;
@@ -121,3 +139,21 @@ body.success #success-msg{
     opacity: 1;
     transition: opacity 0.2 ease;
 }
+@keyframes wobble {
+    0% { transform: scale(0.85) translate(1px, 1px); }
+    10% { transform: scale(0.85) translate(-1px, -2px); }
+    20% { transform: scale(0.85) translate(-3px, 0px); }
+    30% { transform: scale(0.85) translate(3px, 2px); }
+    40% { transform: scale(0.85) translate(1px, -1px);}
+    50% { transform: scale(0.85) translate(-1px, 2px); }
+    60% { transform: scale(0.85) translate(-3px, 1px); }
+    70% { transform: scale(0.85) translate(3px, 1px); }
+    80% { transform: scale(0.85) translate(-1px, -1px); }
+    90% { transform: scale(0.85) translate(1px, 2px); }
+    100% { transform: scale(0.85) translate(1px, -2px);; }
+  }
+  .player.collide {
+    animation: wobble 0.2s;
+    animation-iteration-count: infinite;
+  }
+  
